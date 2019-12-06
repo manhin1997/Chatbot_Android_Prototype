@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+	<!-- insert your AIML categories here -->
+  <category>
+    <pattern>name</pattern>
+    <template>Henry Lee</template>
+  </category>
+  <category>
+    <pattern>hello</pattern>
+    <template>World</template>
+  </category>
+</aiml>
