@@ -2,11 +2,39 @@
 <aiml version="2.0">
 	<!-- insert your AIML categories here -->
   <category>
-    <pattern>name</pattern>
-    <template>Henry Lee</template>
+    <pattern>hello, is there any standards regarding pet transfer</pattern>
+    <template>IATA Live Animals Regulations and with the requirements of all relevant jurisdictions.</template>
   </category>
   <category>
-    <pattern>hello</pattern>
-    <template>World</template>
+    <pattern>how much would it cost to transfer a cat to japan</pattern>
+    <template>It would be around $18000</template>
+  </category>
+  <category>
+    <pattern>do we need to provide food and drink from ourselves</pattern>
+    <template>Yes, customer should provide enough food and drink to their pets.
+
+As you seems convern about your pet, we can provide a coupon code "CXPOLU" for 10% off on our transport insurance service.</template>
+  </category>
+  <category>
+    <pattern>enquiring a product status</pattern>
+    <template>Please provide a picture of your product</template>
+  </category>
+  <category>
+    <pattern>%image0</pattern>
+    <template>Sorry, we can't recognize your picture, please try again.</template>
+  </category>
+    <category>
+    <pattern>%image1</pattern>
+    <template>Please validate the following:
+    Product ID: 12345678 
+    Customer Name: Steve Jobs
+    </template>
+  </category>
+  <category>
+    <pattern>Correct</pattern>
+    <template>Product information:
+    Currently located: 「國泰空運貨運站」
+    Arrival Date: 13/9/2019 5:00 pm 
+    </template>
   </category>
 </aiml>

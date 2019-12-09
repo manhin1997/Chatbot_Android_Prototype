@@ -1,7 +1,11 @@
 package com.btb_game.chatbot_prototype;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -34,11 +39,12 @@ public class MainActivity extends AppCompatActivity {
     ListView listView;
     FloatingActionButton btnSend;
     EditText editTextMsg;
-    ImageView imageView;
+    ImageButton btnImage;
 
     private Bot bot;
     public static Chat chat;
     private ChatMessageAdapter adapter;
+    private int imageid = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         btnSend = findViewById(R.id.btnSend);
         editTextMsg = findViewById(R.id.edtTextMsg);
-        imageView = findViewById(R.id.imageView);
+        btnImage = findViewById(R.id.btnImage);
 
         adapter = new ChatMessageAdapter(this,new ArrayList<ChatMessage>());
         listView.setAdapter(adapter);
@@ -72,6 +78,16 @@ public class MainActivity extends AppCompatActivity {
                 listView.setSelection(adapter.getCount() - 1);
             }
         });
+
+        btnImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent,0);
+            }
+        });
+
+
         boolean avaliable = isSDCartAvaliable();
 
         AssetManager assets = getResources().getAssets();
@@ -141,5 +157,23 @@ public class MainActivity extends AppCompatActivity {
     private void sendMessage(String message){
         ChatMessage chatMessage = new ChatMessage(false,true,message);
         adapter.add(chatMessage);
+    }
+
+    private void sendImage(Bitmap image){
+        String message = bitmaptostring.convertIconToString(image);
+        ChatMessage chatMessage = new ChatMessage(true,true, message);
+        adapter.add(chatMessage);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+        sendImage(bitmap);
+
+        String response = chat.multisentenceRespond("%image" + String.valueOf(imageid));
+        imageid = imageid + 1;
+        botsReply(response);
+        listView.setSelection(adapter.getCount() - 1);
     }
 }
